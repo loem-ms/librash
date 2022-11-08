@@ -25,12 +25,51 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="#!">LibraSH</a>
-                <a class="btn btn-primary" href="#signin">Log In</a>
+                <a class="navbar-brand" href="{% url 'mylibrary:index'%}">LibraSH</a>
+                <ul class="navbar-nav mr-auto>
+                    <li class="nav-item {% block shared_space %}{% endblock %}">
+                    <a class="nav-link" href="#">Shared Space</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav mr-auto>
+                    <li class="nav-item {% block my_documents %}{% endblock %}">
+                        <a class="nav-link" href="{% url 'mylibrary:document_list' %}">My Documents</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto>
+                    <li class="nav-item {% block logout %}{% endblock %}">
+                    <a class="nav-link" href="{% url 'account_logout'%}">Log Out</a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav mr-auto>
+                    <li class="nav-item {% block login %}{% endblock %}">
+                    <a class="nav-link" href="{% url 'account_login'%}">Log In</a>
+                    </li>
+                </ul>
+                {% endif %}
             </div>
         </nav>
 
         {% block header %}{% endblock %}
+
+        {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="my-div-style-w-100">
+                    <ul class="messages" stype="list-style: none;">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                            {{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         {% block contents %}{% endblock %}
 
         <!-- Footer-->
@@ -47,7 +86,7 @@
                             <li class="list-inline-item">⋅</li>
                             <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
                         </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2022. All Rights Reserved.</p>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; LibraSH 2022. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">

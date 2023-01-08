@@ -6,5 +6,3 @@ TODO:
 - [x] Private reading record
 - [ ] Shared Space
 - [ ] Machine Learning application
-
-![image](./cover.png)
